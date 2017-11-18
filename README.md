@@ -1,2 +1,2 @@
 # shortwave 
-Electron based digital audio workstation piano roll.
+Electron based music beat producer, powered by Node Emitter, Howler, Vue and Bootstrap.
