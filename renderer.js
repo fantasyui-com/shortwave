@@ -12,27 +12,25 @@ new Vue({
 
     bpm: 256,
 
-    sounds: {
+    samples: {
 
       silence: { sound:'', icon:'' },
-      slam: { sound:'slam.wav', icon:'heart' },
-      crunch: { sound:'crunch.wav', icon:'th' },
+         slam: { sound:'slam.wav', icon:'heart' },
+       crunch: { sound:'crunch.wav', icon:'th' },
 
     },
 
-    grid:[
+    cells: [
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
+      [{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},{active:false, device:null},],
 
-      [ {active:true }, {active:true }, {active:true },{active:true,sound:'slam' }, {active:true }, {active:true,sound:'crunch' },{active:true }, {active:true }, {active:true },{active:true,sound:'crunch' }, {active:true }, {active:true }, ],
-
-      [ {active:false }, {active:false }, {active:false },{active:false,sound:'slam' }, {active:false }, {active:false,sound:'crunch' },{active:false }, {active:false }, {active:false },{active:false,sound:'crunch' }, {active:false }, {active:false }, ],
-      [ {active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false }, ],
-      [ {active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false,sound:'crunch' },{active:false }, {active:false }, {active:false }, ],
-      [ {active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false,sound:'crunch' },{active:false }, {active:false }, {active:false }, ],
-      [ {active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false },{active:false }, {active:false }, {active:false,sound:'crunch' },{active:false }, {active:false }, {active:false }, ],
-
-
-
-    ]
+    ],
 
   },
 
@@ -54,46 +52,53 @@ new Vue({
 
     })
 
-    for(let y = 1; y<this.grid.length;y++){
-      for(let x = 0; x<this.grid[y].length;x++){
-        this.grid[y][x].active = false;
+    for(let y = 1; y<this.cells.length;y++){
+      for(let x = 0; x<this.cells[y].length;x++){
+        this.cells[y][x].active = false;
       }
     }
 
-    let y = this.grid.length-2;
+    let y = this.cells.length-2;
     const payload = ()=>{
       //console.log('TICK')
       y++;
-      if(y>=this.grid.length) y = 0 ;
+      if(y>=this.cells.length) y = 0 ;
 
-        for(let x = 0; x<this.grid[y].length;x++){
+        for(let x = 0; x<this.cells[y].length;x++){
         //console.log("/",y,x)
-        if(this.grid[y][x].active ){
+        if(this.cells[y][x].active ){
 
           let nextActiveColX = x;
           let nextActiveColY = y+1;
-          if(nextActiveColY>=this.grid.length) nextActiveColY = 0;
+          if(nextActiveColY>=this.cells.length) nextActiveColY = 0;
 
-          this.grid[y][x].active = false;
-          this.grid[nextActiveColY][nextActiveColX].active = true;
-          myEmitter.emit('cell', Object.assign({x:nextActiveColX, y:nextActiveColY},this.grid[nextActiveColY][nextActiveColX]));
+          this.cells[y][x].active = false;
+          this.cells[nextActiveColY][nextActiveColX].active = true;
+          myEmitter.emit('cell', Object.assign({x:nextActiveColX, y:nextActiveColY},this.cells[nextActiveColY][nextActiveColX]));
         }
       }
     }
-    setInterval(payload, (1000*60)/this.bpm);
+    //setInterval(payload, (1000*60)/this.bpm);
     payload();
 
   },
 
   computed: {
 
-    cellWidth:function(){return 100/this.grid[0].length},
-    cellHeight:function(){return 100/this.grid.length},
+    cellWidth:function(){return 100/this.cells[0].length},
+    cellHeight:function(){return 100/this.cells.length},
 
 
   },
 
   methods: {
+
+    setStation:function(cell){
+
+      console.log(cell);
+      cell.active = true;
+
+    },
 
     nextSound:function(cell){
 
@@ -128,7 +133,6 @@ new Vue({
     },
     cellClass:function(cell){
       if(cell.active&&cell.sound) return 'cell-active cell-sound';
-
       if(cell.active) return 'cell-active';
       if(cell.sound) return 'cell-sound';
       return 'bg';
