@@ -20,34 +20,52 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.0.5/howler.min.js"></script>
   <style>
 
+  html {
+    -webkit-app-region: drag;
+
+  }
+
+  body {
+    margin-top: 24px;
+  }
+
+
   .bg {
-    background-color: #242000;
+    background-color: #343233;
   }
+
   .sound-cell {
-    transition: .4s all;
-    border-radius: 8px;
-    background-color: #1f1b01;
-    box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, 0.5);
+    border-radius: 4px;
+    background-color: #2f2d2e;
 
   }
-
-  .sound-cell.cell-active.cell-sound {
-    background-color: #5fe344;
-    box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, 0.2), inset 0px 0px 16px 16px #6FE63B;
-
+  .sound-cell:hover {
+    background-color: #933e62;
   }
+
+
 
   .sound-cell.cell-active {
-    border-radius: 16px;
-    background-color: #443c02;
-    box-shadow: inset 0px 0px 6px 6px #1a1701;
+
+    background-color: #DDA032;
+    border-style: solid;
+    border-bottom-width: 4px;
+    border-left-width: 4px;
   }
-  .sound-cell.cell-sound {
-    background-color: #FCFCBE;
-    border-radius: 16px;
-    box-shadow: 0px 0px 8px 3px rgba(0, 0, 0, 0.2), inset 0px 0px 16px 16px #E3D544;
-    border: 2px solid #B8AC24;
-  }
+  /*
+  .sound-cell.cell-active:hover {
+    xbackground-color: #cc942f;
+
+    border-bottom-width: 0px;
+    border-left-width: 0px;
+
+    border-top: 4px solid #343233;
+    border-right: 4px solid #343233;
+
+    border-radius: 0px;
+  }*/
+
+
   </style>
 
 </head>
@@ -57,8 +75,7 @@
 
     <div v-for="row in cells" class="m-0 p-0" style="line-height:1em;">
       <div v-for="cell in row" class="d-inline-block p-1" :style="`width:${cellWidth}vw; height:${cellHeight}vh;`">
-        <div v-on:click="setStation(cell)" :class="`sound-cell d-inline-block text-center ${cellClass(cell)}`" style="width: 100%; height:100%;">
-          <i :class="`fa fa-${cellIcon(cell)}`"></i>
+        <div v-on:click="setStation(cell)" :class="`pt-3 sound-cell d-inline-block text-center ${cellClass(cell)}`" style="width: 100%; height:100%;" :style="cellStyle(cell)">
         </div>
       </div>
     </div>

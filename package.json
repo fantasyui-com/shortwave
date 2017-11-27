@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/fantasyui-com/shortwave/issues"
   },
-  "homepage": "https://github.com/fantasyui-com/shortwave#readme"
+  "homepage": "https://github.com/fantasyui-com/shortwave#readme",
+  "dependencies": {
+    "tunajs": "^1.0.0",
+    "web-audio-daw": "^2.6.1"
+  }
 }
