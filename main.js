@@ -14,6 +14,7 @@ let mainWindow
 function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
+    webPreferences: { nodeIntegration: true },  // As of version 5, the default for nodeIntegration changed from true to false.
     width: 800,
     height: 600,
     frame: false, titleBarStyle: 'hidden'
