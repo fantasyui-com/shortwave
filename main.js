@@ -17,7 +17,8 @@ function createWindow () {
     webPreferences: { nodeIntegration: true },  // As of version 5, the default for nodeIntegration changed from true to false.
     width: 800,
     height: 600,
-    frame: false, titleBarStyle: 'hidden'
+    frame: false, titleBarStyle: 'hidden',
+    webPreferences: {nodeIntegration: true }
   })
 
   // and load the index.html of the app.
