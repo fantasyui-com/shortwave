@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/fantasyui-com/shortwave#readme",
   "dependencies": {
-    "tunajs": "^1.0.0",
+    "tunajs": "^1.0.10",
     "web-audio-daw": "^2.6.1"
   }
 }
