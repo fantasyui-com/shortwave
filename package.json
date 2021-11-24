@@ -1,6 +1,6 @@
 {
   "name": "shortwave",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Electron based digital audio workstation piano roll.",
   "main": "main.js",
   "scripts": {
